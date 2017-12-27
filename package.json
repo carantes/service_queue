@@ -9,6 +9,8 @@
     "check": "npm run lint & npm test",
     "build": "rimraf dist/ && babel ./ -d dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
     "babel-node": "babel-node --presets env -- src/app.js --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log",
+    "mock:mac": "./mocks/commservice.mac",
+    "mock:linux": "./mocks/commservice.linux",
     "start": "nodemon --exec npm run babel-node",
     "start:prd": "npm run build && node dist/src/app.js"
   },
