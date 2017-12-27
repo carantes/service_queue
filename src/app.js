@@ -4,9 +4,10 @@ import Request from './models/Request';
 import ScheduleService from './services/ScheduleService';
 import Logger from './helpers/logger';
 
-const queue = new Queue();
+Logger.log('Service Queue app started');
 
 // Read data and enqueue it
+const queue = new Queue();
 data.forEach((service) => {
     const { endpoint, method, requests } = service;
     requests.forEach((request) => {
@@ -16,17 +17,13 @@ data.forEach((service) => {
     Logger.log('All requests queued');
 });
 
-// Start
+// Run
 let next = queue.remove();
-const startDate = new Date();
-Logger.log(`Service Queue app started at ${startDate}`);
-
 while (next) {
     const {
         endpoint, method, body, schedule,
     } = next;
 
-    ScheduleService.schedule(endpoint, method, body, startDate, schedule);
-
+    ScheduleService.schedule(endpoint, method, body, schedule);
     next = queue.remove();
 }
